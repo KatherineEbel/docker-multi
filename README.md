@@ -1,0 +1,1 @@
+# Sample Application using AWS ElasticBeanstalk, Docker and GitHub actions for CI

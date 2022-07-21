@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nginx:
+    image: "kat201/multi-nginx"
+    hostname: client
+    ports:
+      - '80:80'
+  server:
+    image: "kat201/multi-server"
+    hostname: api
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+      - PGUSER=$PGUSER
+      - PGHOST=$PGHOST
+      - PGDATABASE=$PGDATABASE
+      - PGPASSWORD=$PGPASSWORD
+      - PGPORT=$PGPORT
+  client:
+    image: "kat201/multi-client"
+    hostname: client
+  worker:
+    image: "kat201/multi-worker"
+    hostname: worker
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
