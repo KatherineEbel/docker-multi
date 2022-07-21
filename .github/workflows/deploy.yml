@@ -21,11 +21,11 @@ jobs:
         run: |
           npm ci
           npm test
-  deploy:
-    runs-on: ubuntu-latest
+  publish:
     strategy:
       matrix:
         service: [client, server, nginx, worker]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Latest Repo
         uses: actions/checkout@master
@@ -46,6 +46,12 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME}}/multi-${{ matrix.service }}:latest
 
+  deploy:
+    needs: [publish]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Latest Repo
+        uses: actions/checkout@master
       - name: Get Timestamp
         uses: gerred/actions/current-time@master
         id: current-time
